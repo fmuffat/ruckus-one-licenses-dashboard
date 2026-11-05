@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; script-src 'self'; style-src 'self'; img-src 'self' data:">
+  <title>RUCKUS One Licenses Dashboard</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <aside class="sidebar">
+    <div class="brand">
+      <p class="brand-name">RUCKUS One Licenses Dashboard</p>
+    </div>
+    <nav id="nav" data-i18n-aria="app.title"></nav>
+    <label class="sidebar-foot">
+      <span data-i18n="language"></span>
+      <select id="language"></select>
+    </label>
+    <p class="disclaimer" data-i18n="about.short"></p>
+  </aside>
+
+  <div class="content" id="content">
+    <header class="topbar">
+      <h1 id="page-title"></h1>
+      <div class="actions" id="refresh-area">
+        <span id="freshness" class="muted small"></span>
+        <button id="btn-refresh" type="button" class="primary"></button>
+      </div>
+    </header>
+
+    <div id="demo-banner" class="banner demo" hidden>
+      <span data-i18n="demo.banner"></span>
+      <button id="btn-leave-demo" type="button" class="link" data-i18n="demo.leave"></button>
+    </div>
+    <div id="alerts"></div>
+
+    <main id="page-welcome" class="welcome" hidden>
+      <h2 data-i18n="welcome.title"></h2>
+      <p data-i18n="welcome.body"></p>
+      <p class="muted small" data-i18n="about.full"></p>
+      <div class="actions">
+        <button id="btn-welcome-add" type="button" class="primary" data-i18n="welcome.add"></button>
+        <button id="btn-welcome-demo" type="button" data-i18n="welcome.demo"></button>
+      </div>
+    </main>
+
+    <main id="page-home" hidden>
+      <p class="page-hint muted" data-i18n="home.subtitle"></p>
+      <section id="home-stats" class="tiles"></section>
+      <section id="home-tasks"></section>
+    </main>
+
+    <main id="page-clients" hidden>
+      <p id="clients-hint" class="page-hint muted"></p>
+      <section id="tiles" class="tiles" data-i18n-aria="customers.summary"></section>
+      <div class="filters">
+        <input id="search" type="search" data-i18n-placeholder="filter.search" data-i18n-aria="filter.search">
+        <select id="account-filter" data-i18n-aria="filter.account"></select>
+        <button id="btn-clear" type="button" class="link" hidden data-i18n="filter.clear"></button>
+        <span id="count" class="muted"></span>
+        <button id="btn-export" type="button" data-i18n="action.export"></button>
+      </div>
+      <div class="table-wrap">
+        <table>
+          <thead>
+            <tr>
+              <th data-i18n="table.client"></th>
+              <th data-i18n="table.status"></th>
+              <th data-i18n="table.due"></th>
+              <th data-i18n="table.used"></th>
+              <th data-i18n="table.capacity"></th>
+            </tr>
+          </thead>
+          <tbody id="rows"></tbody>
+        </table>
+        <p id="empty" class="empty muted" hidden data-i18n="filter.empty"></p>
+      </div>
+    </main>
+
+    <main id="page-licenses" hidden>
+      <p class="page-hint muted" data-i18n="inventory.varHint"></p>
+      <section id="inventory" class="inventory" data-i18n-aria="inventory.title"></section>
+    </main>
+
+    <main id="page-settings" class="settings" hidden>
+      <section class="panel">
+        <h2 data-i18n="accounts.title"></h2>
+        <ul id="account-list" class="account-list"></ul>
+        <form id="account-form">
+          <h3 data-i18n="accounts.add"></h3>
+          <label><span data-i18n="accounts.label"></span> <input name="label" required data-i18n-placeholder="accounts.labelExample"></label>
+          <label><span data-i18n="accounts.region"></span> <select name="region" required></select></label>
+          <label><span data-i18n="accounts.tenantId"></span> <input name="tenantId" required autocomplete="off" spellcheck="false"></label>
+          <label><span data-i18n="accounts.clientId"></span> <input name="clientId" required autocomplete="off" spellcheck="false"></label>
+          <label><span data-i18n="accounts.secret"></span> <input name="clientSecret" type="password" required autocomplete="off"></label>
+          <p class="muted small" data-i18n="accounts.hint"></p>
+          <p id="form-error" class="form-error" role="alert" hidden></p>
+          <button id="btn-save-account" type="submit" class="primary"></button>
+        </form>
+      </section>
+      <section class="panel">
+        <h2 data-i18n="action.diagnostic"></h2>
+        <p class="muted" data-i18n="settings.diagnosticHint"></p>
+        <p><button id="btn-diagnostic" type="button"></button></p>
+        <p id="diagnostic-result" class="banner info" role="status" hidden></p>
+      </section>
+      <section class="panel">
+        <h2 data-i18n="about.title"></h2>
+        <p data-i18n="about.full"></p>
+      </section>
+    </main>
+  </div>
+
+  <script src="../shared/i18n.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,57 @@
+{
+  "name": "ruckus-one-licenses-dashboard",
+  "productName": "RUCKUS One Licenses Dashboard",
+  "version": "0.1.0",
+  "description": "Statut des licences RUCKUS One par client, pour le back-office",
+  "private": true,
+  "main": "src/main/main.js",
+  "scripts": {
+    "start": "electron .",
+    "test": "node --test",
+    "dist:win": "electron-builder --win",
+    "dist:mac": "electron-builder --mac"
+  },
+  "build": {
+    "appId": "local.ruckus-one-licenses-dashboard.app",
+    "files": [
+      "src/**/*",
+      "package.json"
+    ],
+    "win": {
+      "target": [
+        "nsis",
+        "portable"
+      ]
+    },
+    "mac": {
+      "target": [
+        {
+          "target": "dmg",
+          "arch": [
+            "x64",
+            "arm64"
+          ]
+        }
+      ],
+      "identity": "-",
+      "hardenedRuntime": false,
+      "category": "public.app-category.business"
+    },
+    "nsis": {
+      "oneClick": false,
+      "perMachine": false,
+      "allowToChangeInstallationDirectory": true,
+      "artifactName": "RUCKUS-One-Licenses-Dashboard-Setup-${version}.${ext}"
+    },
+    "portable": {
+      "artifactName": "RUCKUS-One-Licenses-Dashboard-${version}-portable.${ext}"
+    },
+    "dmg": {
+      "artifactName": "RUCKUS-One-Licenses-Dashboard-${version}-${arch}.${ext}"
+    }
+  },
+  "devDependencies": {
+    "electron": "^45.2.3",
+    "electron-builder": "^26.18.0"
+  }
+}
