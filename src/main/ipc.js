@@ -2,7 +2,7 @@
 
 const fs = require('node:fs');
 const path = require('node:path');
-const { app, dialog, ipcMain, net, safeStorage, BrowserWindow } = require('electron');
+const { app, dialog, ipcMain, net, safeStorage, shell, BrowserWindow } = require('electron');
 const { AccountStore } = require('./accountStore');
 const { REGIONS, R1Client, collectAccount } = require('../core/r1Client');
 const { UserError } = require('../core/errors');
@@ -10,6 +10,7 @@ const { createDemoFetch, DEMO_ACCOUNT } = require('../core/demoServer');
 const { customersToCsv } = require('../core/csv');
 const { createRecorder, buildDiagnostic } = require('../core/diagnostic');
 const { buildTasks } = require('../core/tasks');
+const { checkForUpdate } = require('../core/updates');
 const { normalizeLanguage } = require('../shared/i18n');
 
 const TENANT_ID_PATTERN = /^[A-Za-z0-9-]{8,64}$/;
@@ -46,6 +47,8 @@ function register() {
   // net.fetch passe par le proxy configuré sur le poste, contrairement au fetch de Node.
   const fetchImpl = (url, init) => net.fetch(url, init);
   let lastCustomers = [];
+  // L'adresse reste ici : l'interface demande le téléchargement, elle ne choisit pas ce qui est ouvert.
+  let availableUpdate = null;
 
   const toPayload = (results, demo) => {
     lastCustomers = results.flatMap((result) => result.customers);
@@ -106,6 +109,26 @@ function register() {
 
   handle('export:csv', (event, { language }) =>
     saveFile(event, dated('ruckus-licenses', 'csv'), 'csv', customersToCsv(lastCustomers, normalizeLanguage(language))));
+
+  handle('updates:check', async () => {
+    availableUpdate = await checkForUpdate({
+      fetchImpl,
+      currentVersion: app.getVersion(),
+      target: {
+        platform: process.platform,
+        arch: process.arch,
+        // Variable posée par le lanceur de la version portable de Windows.
+        portable: Boolean(process.env.PORTABLE_EXECUTABLE_FILE),
+      },
+    });
+    return availableUpdate && { version: availableUpdate.version };
+  });
+
+  handle('updates:download', async () => {
+    if (!availableUpdate) return false;
+    await shell.openExternal(availableUpdate.url);
+    return true;
+  });
 }
 
 module.exports = { register };

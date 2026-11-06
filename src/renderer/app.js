@@ -27,6 +27,8 @@ const state = {
   accountId: 'all',
   expanded: new Set(),
   inventoryOpen: new Set(),
+  update: null,
+  updateStarted: false,
 };
 
 // Noms de gamme RUCKUS : identiques dans toutes les langues.
@@ -621,6 +623,36 @@ function renderAlerts() {
   }
 }
 
+function renderUpdateBanner() {
+  $('update-banner').hidden = !state.update;
+  if (!state.update) return;
+  $('update-text').textContent = state.updateStarted
+    ? t('update.started')
+    : t('update.available', { version: state.update.version });
+  $('btn-update-download').hidden = state.updateStarted;
+  $('btn-update-later').hidden = state.updateStarted;
+}
+
+async function checkForUpdate() {
+  try {
+    state.update = await call(window.r1.checkForUpdate());
+    render();
+  } catch {
+    // Une vérification qui échoue ne doit pas gêner le travail : pas de bandeau, c'est tout.
+  }
+}
+
+async function downloadUpdate() {
+  state.actionError = null;
+  try {
+    await call(window.r1.downloadUpdate());
+    state.updateStarted = true;
+  } catch (error) {
+    state.actionError = error.userMessage;
+  }
+  render();
+}
+
 function applyStaticTexts() {
   document.documentElement.lang = state.language;
   for (const node of document.querySelectorAll('[data-i18n]')) node.textContent = t(node.dataset.i18n);
@@ -646,6 +678,7 @@ function render() {
   $('page-licenses').hidden = !(hasData && state.page === 'licenses');
   $('page-settings').hidden = !isSettings;
   $('demo-banner').hidden = !state.demo;
+  renderUpdateBanner();
   $('page-title').textContent = showWelcome ? 'RUCKUS One Licenses Dashboard' : t(PAGE_TITLES[state.page]);
 
   const canQuery = state.demo || state.accounts.length > 0;
@@ -788,6 +821,11 @@ async function init() {
     goTo('home');
     refresh();
   });
+  $('btn-update-download').addEventListener('click', downloadUpdate);
+  $('btn-update-later').addEventListener('click', () => {
+    state.update = null;
+    render();
+  });
   $('btn-export').addEventListener('click', exportCsv);
   $('btn-diagnostic').addEventListener('click', exportDiagnostic);
   $('search').addEventListener('input', (event) => {
@@ -808,6 +846,7 @@ async function init() {
   state.accounts = await call(window.r1.listAccounts());
   // Anglais par défaut, tant que l'utilisateur n'a pas choisi une autre langue.
   setLanguage(storedLanguage() || i18n.DEFAULT_LANGUAGE);
+  checkForUpdate();
   if (state.accounts.length > 0) refresh();
 }
 

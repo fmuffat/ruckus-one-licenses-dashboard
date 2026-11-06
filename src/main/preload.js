@@ -11,4 +11,6 @@ contextBridge.exposeInMainWorld('r1', {
   demo: () => ipcRenderer.invoke('data:demo'),
   exportCsv: (language) => ipcRenderer.invoke('export:csv', { language }),
   exportDiagnostic: (demo) => ipcRenderer.invoke('diagnostic:export', { demo }),
+  checkForUpdate: () => ipcRenderer.invoke('updates:check'),
+  downloadUpdate: () => ipcRenderer.invoke('updates:download'),
 });

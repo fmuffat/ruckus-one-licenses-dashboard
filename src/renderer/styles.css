@@ -154,6 +154,8 @@ input, select {
 .banner { display: flex; gap: 12px; align-items: center; padding: 8px 12px; margin-bottom: 12px; border-radius: 6px; }
 .banner.demo { background: var(--orange-bg); color: var(--orange); }
 .banner.error { background: var(--red-bg); color: var(--red); }
+.banner.update { background: var(--grey-bg); color: var(--text); }
+.banner.update > span { flex: 1; }
 .banner.info { margin: 10px 0 0; background: var(--grey-bg); color: var(--text); overflow-wrap: anywhere; }
 
 .welcome { max-width: 560px; margin: 72px auto; display: grid; gap: 14px; }

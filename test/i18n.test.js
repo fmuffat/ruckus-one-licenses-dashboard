@@ -51,7 +51,7 @@ test('toutes les clés utilisées par l\'interface et le cœur existent', () => 
   const root = path.join(__dirname, '..', 'src');
   const files = ['renderer/index.html', 'renderer/app.js', 'core/licenses.js', 'core/r1Client.js', 'core/csv.js',
     'core/tasks.js', 'main/ipc.js', 'main/accountStore.js'];
-  const pattern = /['"`=]((?:about|nav|home|item|settings|forecast|action|demo|welcome|filter|customers|table|status|tile|days|capacity|tag|inventory|line|detail|customer|reco|accounts|region|diagnostic|source|error|csv)\.[A-Za-z0-9.]+)['"`]/g;
+  const pattern = /['"`=]((?:about|nav|home|item|settings|forecast|action|demo|update|welcome|filter|customers|table|status|tile|days|capacity|tag|inventory|line|detail|customer|reco|accounts|region|diagnostic|source|error|csv)\.[A-Za-z0-9.]+)['"`]/g;
   for (const file of files) {
     const text = fs.readFileSync(path.join(root, file), 'utf8');
     for (const [, key] of text.matchAll(pattern)) {

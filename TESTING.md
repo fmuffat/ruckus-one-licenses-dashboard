@@ -26,6 +26,8 @@ The app is not signed yet, so your computer will warn you:
 xattr -cr "/Applications/RUCKUS One Licenses Dashboard.app"
 ```
 
+When a newer version is published, a banner appears at the top of the app. Click **Download**, close the app, then open the downloaded file. Your accounts are kept.
+
 ## Try it
 
 **Without a RUCKUS account:** click **View the demo**. All customers shown are fictitious.
@@ -86,6 +88,8 @@ L'application n'est pas encore signée, votre poste affichera donc un avertissem
 
 - **Windows :** sur « Windows a protégé votre ordinateur », choisissez **Informations complémentaires**, puis **Exécuter quand même**.
 - **Mac :** glissez l'application dans Applications. Si macOS la bloque ou la dit endommagée, lancez la commande de la partie anglaise dans le Terminal, puis rouvrez-la.
+
+Quand une nouvelle version est publiée, un bandeau apparaît en haut de l'application. Cliquez sur **Télécharger**, fermez l'application, puis ouvrez le fichier téléchargé. Vos comptes sont conservés.
 
 ## Essayer
 

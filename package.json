@@ -1,7 +1,7 @@
 {
   "name": "ruckus-one-licenses-dashboard",
   "productName": "RUCKUS One Licenses Dashboard",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Statut des licences RUCKUS One par client, pour le back-office",
   "private": true,
   "main": "src/main/main.js",

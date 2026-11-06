@@ -45,6 +45,12 @@ Download the installers from the [Releases page](../../releases), and follow the
 
 The installers are not signed, so Windows SmartScreen and macOS Gatekeeper show a warning. The guide explains how to get past it. The Mac version has not been tested on a Mac yet.
 
+## Updates
+
+When the app starts, it asks GitHub for the list of published versions. It sends nothing about your accounts or customers. If a newer version exists, a banner appears at the top: **Download** opens the right file for your computer in the browser, and you then install it yourself. Your accounts and settings are kept. If the check fails, for example when offline, the app shows nothing.
+
+The app does not install updates by itself, because the installers are not signed. The banner first appears from the version after v0.1.0, so anyone on v0.1.0 has to download the next version by hand once.
+
 ## Create the access token
 
 In RUCKUS One, go to **Administration > Account Management > Settings > Application Token**. The **Read-Only** scope is enough.
